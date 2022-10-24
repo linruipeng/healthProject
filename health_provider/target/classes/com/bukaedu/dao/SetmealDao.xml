@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bukaedu.dao.SetmealDao">
+    <insert id="add" parameterType="pojo.Setmeal">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+            select last_insert_id()
+        </selectKey>
+
+        insert into t_setmeal (code,name,sex,helpCode,age,price,remark,attention,img)
+        values (#{code},#{name},#{sex},#{helpCode},#{age},#{price},#{remark},#{attention},#{img});
+
+    </insert>
+    <insert id="setmealIdAndgroupId" parameterType="hashmap">
+        insert into t_setmeal_checkgroup (setmeal_id,checkgroup_id)
+        values (#{setmeal_id},#{checkgroup_id});
+    </insert>
+
+    <select id="selectByCondition" parameterType="string" resultType="pojo.Setmeal">
+        select * from t_setmeal
+        <if test="queryString!=null and queryString.length>0">
+            where code = #{queryString} or name = #{queryString} or helpCode=#{queryString}
+        </if>
+    </select>
+
+    <select id="findAll" resultType="pojo.Setmeal">
+        select * from t_setmeal
+    </select>
+
+    <select id="finSetmealCount" resultType="map">
+        select s.name,count(o.id) value
+        from t_setmeal as s,t_order as o
+        where o.setmeal_id =s.id
+        group by s.name
+    </select>
+
+</mapper>

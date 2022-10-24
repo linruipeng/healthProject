@@ -1,0 +1,8 @@
+com\bukaedu\service\ReportService.class
+com\bukaedu\service\SetmealService.class
+com\bukaedu\service\OrderSettingService.class
+com\bukaedu\service\CheckItemService.class
+com\bukaedu\service\OrderService.class
+com\bukaedu\service\CheckgroupService.class
+com\bukaedu\service\UserService.class
+com\bukaedu\service\MemberService.class

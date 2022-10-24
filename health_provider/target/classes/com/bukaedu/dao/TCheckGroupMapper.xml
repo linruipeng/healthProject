@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bukaedu.dao.TCheckGroupMapper">
+    <resultMap id="BaseResultMap" type="pojo.TSetmealCheckgroupKey">
+        <id column="setmeal_id" jdbcType="INTEGER" property="setmealId" />
+        <id column="checkgroup_id" jdbcType="INTEGER" property="checkgroupId" />
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List">
+        setmeal_id, checkgroup_id
+    </sql>
+
+    <select id="selectByExample" parameterType="pojo.TSetmealCheckgroupKey" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from t_setmeal_checkgroup
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"></include>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+
+    </select>
+
+    <resultMap id="BaseResultMap1" type="pojo.CheckGroup">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="code" jdbcType="VARCHAR" property="code" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="helpCode" jdbcType="VARCHAR" property="helpCode" />
+        <result column="sex" jdbcType="CHAR" property="sex" />
+        <result column="remark" jdbcType="VARCHAR" property="remark" />
+        <result column="attention" jdbcType="VARCHAR" property="attention" />
+    </resultMap>
+    <sql id="Base_Column_List1">
+        id, code, name, helpCode, sex, remark, attention
+    </sql>
+    <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap1">
+        select <include refid="Base_Column_List1"/>
+        from t_checkgroup
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+</mapper>
